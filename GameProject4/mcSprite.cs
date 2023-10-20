@@ -19,6 +19,7 @@ namespace GameProject4
         Idle = 0,
         Running = 1,
         Jumping = 2,
+        Attacking = 3,
     }
 
 
@@ -36,6 +37,8 @@ namespace GameProject4
         private KeyboardState currentKeyboardState;
         private KeyboardState priorKeyboardState;
 
+        private MouseState currentMouseState;
+
         private BoundingRectangle _bounds = new BoundingRectangle(new Vector2(200 - 32, 300 - 32), 48, 130);
 
         private float _velocityY = 0;
@@ -46,11 +49,15 @@ namespace GameProject4
 
         private double _animationTimer;
 
+        private double _attackingTimer = 0;
+
         private short _animationFrame;
 
         private bool _flipped;
 
         private bool _offGround = false;
+
+        private bool _attacked = false;
 
         private Vector2 direction;
         #endregion
@@ -136,7 +143,7 @@ namespace GameProject4
             }
 
 
-            //Jump Function. May work on Later
+            //Gravity Function
             if (_offGround)
             {
                 action = Action.Jumping;
@@ -145,6 +152,7 @@ namespace GameProject4
                 //_position.Y += gravity;
 
             }
+            //Jump Function
             if (currentKeyboardState.IsKeyDown(Keys.Space) && !_offGround)
             {
                 //_offGround = true;
@@ -159,6 +167,27 @@ namespace GameProject4
             if (!_offGround)
             {
                 _velocityY = 0;
+            }
+
+            if (currentKeyboardState.IsKeyDown(Keys.Enter) && !_attacked)
+            {
+                _attacked = true;
+                _animationFrame = 0;
+                _animationTimer = 0;
+
+                
+            }
+
+            if (_attacked)
+            {
+                action = Action.Attacking;
+                _attackingTimer += gameTime.ElapsedGameTime.TotalSeconds;
+            }
+
+            if (_attackingTimer > 0.5)
+            {
+                _attacked = false;
+                _attackingTimer = 0;
             }
 
 
@@ -178,8 +207,19 @@ namespace GameProject4
         {
 
             SpriteEffects spriteEffects = (_flipped) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-
-            if (_offGround)
+            if (_attacked)
+            {
+                
+                _animationTimer += gameTime.ElapsedGameTime.TotalSeconds;
+                if (_animationTimer > 0.1)
+                {
+                    _animationFrame++;
+                    if (_animationFrame > 3) _animationFrame = 3;
+                    _animationTimer -= 0.1;
+                }
+               
+            }
+            else if (_offGround)
             {
 
                 _animationTimer += gameTime.ElapsedGameTime.TotalSeconds;
