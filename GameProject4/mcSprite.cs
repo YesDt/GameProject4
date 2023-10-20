@@ -156,8 +156,8 @@ namespace GameProject4
             {
                 //_offGround = true;
                 _velocityY -= _jumpHeight;
-                _animationFrame = 0;
-                _animationTimer = 0;
+                if (!_attacked)_animationFrame = 0;
+                if (!_attacked) _animationTimer = 0;
 
 
             }
@@ -183,7 +183,7 @@ namespace GameProject4
                 _attackingTimer += gameTime.ElapsedGameTime.TotalSeconds;
             }
 
-            if (_attackingTimer > 0.5)
+            if (_attackingTimer > 0.4)
             {
                 _attacked = false;
                 _attackingTimer = 0;
