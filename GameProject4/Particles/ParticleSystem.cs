@@ -7,12 +7,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 
-namespace GameProject4
+namespace GameProject4.Particles
 {
     /// <summary>
     /// A class representing a generic particle system
     /// </summary>
-    public abstract class ParticleSystem: DrawableGameComponent
+    public abstract class ParticleSystem : DrawableGameComponent
     {
         #region Constants
 

@@ -13,6 +13,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 using GameProject4.StateManagement;
 using System.Threading;
+using GameProject4.Particles;
 
 namespace GameProject4.Screens
 {
