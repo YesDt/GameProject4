@@ -37,7 +37,6 @@ namespace GameProject4
         private KeyboardState currentKeyboardState;
         private KeyboardState priorKeyboardState;
 
-        private MouseState currentMouseState;
 
         private BoundingRectangle _bounds = new BoundingRectangle(new Vector2(200 - 32, 300 - 32), 48, 130);
 
@@ -55,7 +54,7 @@ namespace GameProject4
 
         private bool _flipped;
 
-        private bool _offGround = false;
+        public bool offGround = false;
 
         private bool _attacked = false;
 
@@ -102,15 +101,15 @@ namespace GameProject4
 
             priorKeyboardState = currentKeyboardState;
             currentKeyboardState = Keyboard.GetState();
-            if (_position.Y < 300)
-            {
-                _offGround = true;
-            }
-            if (_position.Y >= 300)
-            {
-                _position.Y = 300;
-                _offGround = false;
-            }
+            //if (_position.Y < 300)
+            //{
+            //    offGround = true;
+            //}
+            //if (_position.Y >= 300)
+            //{
+            //    _position.Y = 300;
+            //    offGround = false;
+            //}
 
 
 
@@ -144,7 +143,7 @@ namespace GameProject4
 
 
             //Gravity Function
-            if (_offGround)
+            if (offGround)
             {
                 action = Action.Jumping;
                 _velocityY += _gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -153,7 +152,7 @@ namespace GameProject4
 
             }
             //Jump Function
-            if (currentKeyboardState.IsKeyDown(Keys.Space) && !_offGround)
+            if (currentKeyboardState.IsKeyDown(Keys.Space) && !offGround)
             {
                 //_offGround = true;
                 _velocityY -= _jumpHeight;
@@ -164,7 +163,7 @@ namespace GameProject4
             }
             _position.Y += _velocityY;
 
-            if (!_offGround)
+            if (!offGround)
             {
                 _velocityY = 0;
             }
@@ -219,7 +218,7 @@ namespace GameProject4
                 }
                
             }
-            else if (_offGround)
+            else if (offGround)
             {
 
                 _animationTimer += gameTime.ElapsedGameTime.TotalSeconds;
