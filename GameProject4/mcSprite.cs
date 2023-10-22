@@ -30,7 +30,7 @@ namespace GameProject4
         #region privateFields
         private Texture2D _texture;
 
-        private Vector2 _position = new Vector2(200, 300);
+        private Vector2 _position = new Vector2();
 
 
         private KeyboardState currentKeyboardState;
@@ -70,6 +70,12 @@ namespace GameProject4
         #endregion
 
         #region publicMethods
+
+        public mcSprite(Vector2 pos)
+        {
+            _position = pos;
+        }
+
         /// <summary>
         /// Loads the Main character sprite
         /// </summary>

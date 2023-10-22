@@ -28,7 +28,7 @@ namespace GameProject4.Screens
 
         private SpriteFont _gameFont;
 
-        private mcSprite _mc = new mcSprite();
+        private mcSprite _mc = new mcSprite(new Vector2(200, 300));
         private CoinSprite[] _coins;
 
         private Texture2D _level;
