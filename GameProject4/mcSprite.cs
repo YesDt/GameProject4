@@ -19,6 +19,7 @@ namespace GameProject4
         Idle = 0,
         Running = 1,
         Jumping = 2,
+        Attacking = 3,
     }
 
 
@@ -36,6 +37,7 @@ namespace GameProject4
         private KeyboardState currentKeyboardState;
         private KeyboardState priorKeyboardState;
 
+
         private BoundingRectangle _bounds = new BoundingRectangle(new Vector2(200 - 32, 300 - 32), 48, 130);
 
         private float _velocityY = 0;
@@ -46,11 +48,15 @@ namespace GameProject4
 
         private double _animationTimer;
 
+        private double _attackingTimer = 0;
+
         private short _animationFrame;
 
         private bool _flipped;
 
-        private bool _offGround = false;
+        public bool offGround = false;
+
+        private bool _attacked = false;
 
         private Vector2 direction;
         #endregion
@@ -101,15 +107,15 @@ namespace GameProject4
 
             priorKeyboardState = currentKeyboardState;
             currentKeyboardState = Keyboard.GetState();
-            if (_position.Y < 300)
-            {
-                _offGround = true;
-            }
-            if (_position.Y >= 300)
-            {
-                _position.Y = 300;
-                _offGround = false;
-            }
+            //if (_position.Y < 300)
+            //{
+            //    offGround = true;
+            //}
+            //if (_position.Y >= 300)
+            //{
+            //    _position.Y = 300;
+            //    offGround = false;
+            //}
 
 
 
@@ -142,8 +148,8 @@ namespace GameProject4
             }
 
 
-            //Jump Function. May work on Later
-            if (_offGround)
+            //Gravity Function
+            if (offGround)
             {
                 action = Action.Jumping;
                 _velocityY += _gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -151,20 +157,42 @@ namespace GameProject4
                 //_position.Y += gravity;
 
             }
-            if (currentKeyboardState.IsKeyDown(Keys.Space) && !_offGround)
+            //Jump Function
+            if (currentKeyboardState.IsKeyDown(Keys.Space) && !offGround)
             {
                 //_offGround = true;
                 _velocityY -= _jumpHeight;
-                _animationFrame = 0;
-                _animationTimer = 0;
+                if (!_attacked)_animationFrame = 0;
+                if (!_attacked) _animationTimer = 0;
 
 
             }
             _position.Y += _velocityY;
 
-            if (!_offGround)
+            if (!offGround)
             {
                 _velocityY = 0;
+            }
+
+            if (currentKeyboardState.IsKeyDown(Keys.Enter) && !_attacked)
+            {
+                _attacked = true;
+                _animationFrame = 0;
+                _animationTimer = 0;
+
+                
+            }
+
+            if (_attacked)
+            {
+                action = Action.Attacking;
+                _attackingTimer += gameTime.ElapsedGameTime.TotalSeconds;
+            }
+
+            if (_attackingTimer > 0.4)
+            {
+                _attacked = false;
+                _attackingTimer = 0;
             }
 
 
@@ -184,8 +212,19 @@ namespace GameProject4
         {
 
             SpriteEffects spriteEffects = (_flipped) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-
-            if (_offGround)
+            if (_attacked)
+            {
+                
+                _animationTimer += gameTime.ElapsedGameTime.TotalSeconds;
+                if (_animationTimer > 0.1)
+                {
+                    _animationFrame++;
+                    if (_animationFrame > 3) _animationFrame = 3;
+                    _animationTimer -= 0.1;
+                }
+               
+            }
+            else if (offGround)
             {
 
                 _animationTimer += gameTime.ElapsedGameTime.TotalSeconds;

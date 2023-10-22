@@ -14,6 +14,7 @@ using Microsoft.Xna.Framework.Media;
 using GameProject4.StateManagement;
 using System.Threading;
 using GameProject4.Particles;
+using GameProject4.Collisions;
 
 namespace GameProject4.Screens
 {
@@ -30,8 +31,12 @@ namespace GameProject4.Screens
 
         private mcSprite _mc = new mcSprite(new Vector2(200, 300));
         private CoinSprite[] _coins;
+        private Platform _platforms;
+
 
         private Texture2D _level;
+
+        public Texture2D circle;
 
         private SpriteFont _coinCounter;
         private int _coinsLeft;
@@ -85,6 +90,8 @@ namespace GameProject4.Screens
             _gameFont = _content.Load<SpriteFont>("gamefont");
             _level = _content.Load<Texture2D>("level");
 
+            circle = _content.Load<Texture2D>("circle");
+
             // A real game would probably have more content than this sample, so
             // it would take longer to load. We simulate that by delaying for a
             // while, giving you a chance to admire the beautiful loading screen.
@@ -95,6 +102,10 @@ namespace GameProject4.Screens
             // it should not try to catch up.
             ScreenManager.Game.ResetElapsedTime();
             _mc.LoadContent(_content);
+
+            _platforms = new Platform(new Vector2(200, 423), new BoundingRectangle(new Vector2(200 - 200, 423), 1200f, 2));
+
+
             _coinCounter = _content.Load<SpriteFont>("CoinsLeft");
             _coins = new CoinSprite[]
             {
@@ -112,6 +123,9 @@ namespace GameProject4.Screens
             };
             _coinsLeft = _coins.Length;
             foreach (var coin in _coins) coin.LoadContent(_content);
+
+
+
             _coinPickup = _content.Load<SoundEffect>("Pickup_Coin15");
             _backgroundMusic = _content.Load<Song>("Project2music");
             MediaPlayer.IsRepeating = true;
@@ -150,6 +164,14 @@ namespace GameProject4.Screens
             if (IsActive)
             {
 
+                if(_platforms.Bounds.CollidesWith(_mc.Bounds))
+                {
+                    _mc.offGround = false;
+                }
+                else
+                {
+                    _mc.offGround = true;
+                }
                 //var targetPosition = new Vector2(
                 //    ScreenManager.GraphicsDevice.Viewport.Width / 2 - _gameFont.MeasureString("Insert Gameplay Here").X / 2,
                 //    200);
@@ -254,6 +276,11 @@ namespace GameProject4.Screens
             spriteBatch.Begin();
 
             spriteBatch.DrawString(_coinCounter, $"Coins Left: {_coinsLeft}", new Vector2(2, 2), Color.Gold);
+
+            //spriteBatch.Draw(circle, new Vector2(_mc.Bounds.Left, _mc.Bounds.Bottom), null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+
+            //spriteBatch.Draw(circle, _platforms.Position, null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+
             spriteBatch.End();
 
             // If the game is transitioning on or off, fade it out to black.

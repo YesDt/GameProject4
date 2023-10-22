@@ -5,6 +5,8 @@ VisualStudioVersion = 17.7.34009.444
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameProject4", "GameProject4\GameProject4.csproj", "{EB5B28A2-4864-48A8-9F00-576DA61E15ED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TileMapExtension", "TileMapExtension\TileMapExtension.csproj", "{5AE57020-459A-4342-8565-E5A74CDBC4FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{EB5B28A2-4864-48A8-9F00-576DA61E15ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB5B28A2-4864-48A8-9F00-576DA61E15ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB5B28A2-4864-48A8-9F00-576DA61E15ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AE57020-459A-4342-8565-E5A74CDBC4FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AE57020-459A-4342-8565-E5A74CDBC4FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AE57020-459A-4342-8565-E5A74CDBC4FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AE57020-459A-4342-8565-E5A74CDBC4FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
