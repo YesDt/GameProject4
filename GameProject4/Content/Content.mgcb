@@ -57,6 +57,12 @@
 /processorParam:TextureFormat=Compressed
 /build:CoinsLeft.spritefont
 
+#begin example.tmap
+/importer:TileMapImporter
+/processor:TileMapProcessor
+/processorParam:Scale=1
+/build:example.tmap
+
 #begin gamefont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -140,7 +146,7 @@
 /importer:TileMapImporter
 /processor:TileMapProcessor
 /processorParam:Scale=1
-/build:Level2.tmap
+/build:Level2.tmap;TheSecondLevel.tmap
 
 #begin menufont.spritefont
 /importer:FontDescriptionImporter

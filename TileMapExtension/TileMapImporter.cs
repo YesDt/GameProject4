@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 
-using TImport = System.String;
+//using TImport = System.String;
 
 namespace TileMapExtension
 {

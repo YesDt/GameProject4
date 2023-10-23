@@ -15,11 +15,9 @@ using GameProject4.StateManagement;
 using System.Threading;
 using GameProject4.Particles;
 using GameProject4.Collisions;
-
 namespace GameProject4.Screens
 {
-    // This screen implements the actual game logic for level one.
-    public class LevelOneScreen : GameScreen, IParticleEmitter
+    public class LevelTwoScreen: GameScreen, IParticleEmitter
     {
         #region PrivateFields
         private GraphicsDevice _graphics;
@@ -34,7 +32,8 @@ namespace GameProject4.Screens
         private Platform _platforms;
 
 
-        private Texture2D _level;
+        private Texture2D _level2;
+        private TileMap _tilemap;
 
         public Texture2D circle;
 
@@ -63,7 +62,7 @@ namespace GameProject4.Screens
         FireworkParticleSystem _fireworks;
         #endregion
 
-        public LevelOneScreen()
+        public LevelTwoScreen()
         {
 
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
@@ -88,7 +87,8 @@ namespace GameProject4.Screens
                 _content = new ContentManager(ScreenManager.Game.Services, "Content");
 
             _gameFont = _content.Load<SpriteFont>("gamefont");
-            _level = _content.Load<Texture2D>("level");
+            _level2 = _content.Load<Texture2D>("level2");
+            //_tilemap = _content.Load<TileMap>("TheSecondLevel");
 
             circle = _content.Load<Texture2D>("circle");
 
@@ -164,7 +164,7 @@ namespace GameProject4.Screens
             if (IsActive)
             {
 
-                if(_platforms.Bounds.CollidesWith(_mc.Bounds))
+                if (_platforms.Bounds.CollidesWith(_mc.Bounds))
                 {
                     _mc.offGround = false;
                 }
@@ -195,7 +195,11 @@ namespace GameProject4.Screens
                 {
                     _noCoinsLeft = true;
                 }
-                
+                if (_noCoinsLeft)
+                {
+                    MediaPlayer.Stop();
+                    LoadingScreen.Load(ScreenManager, false, null, new MaintainenceScreen());
+                }
 
             }
         }
@@ -231,12 +235,6 @@ namespace GameProject4.Screens
                 _mc.Update(gameTime);
 
             }
-
-            if (_noCoinsLeft)
-            {
-                MediaPlayer.Stop();
-                LoadingScreen.Load(ScreenManager, false, player, new LevelTwoScreen());
-            }
         }
 
         public override void Draw(GameTime gameTime)
@@ -256,7 +254,8 @@ namespace GameProject4.Screens
             spriteBatch.Begin(transformMatrix: transform);
 
 
-            spriteBatch.Draw(_level, new Vector2(0, 0), null, Color.White, 0f, new Vector2(0, 0), 1.5f, SpriteEffects.None, 0f);
+            //_tilemap.Draw(gameTime, _spriteBatch);
+            spriteBatch.Draw(_level2, new Vector2(0, 0), null, Color.White, 0f, new Vector2(0, 0), 1.5f, SpriteEffects.None, 0f);
             foreach (var coin in _coins)
             {
                 coin.Draw(gameTime, spriteBatch);
