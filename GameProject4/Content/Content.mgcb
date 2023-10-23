@@ -10,6 +10,7 @@
 
 #-------------------------------- References --------------------------------#
 
+/reference:..\..\TileMapExtension\bin\Debug\net6.0\TileMapExtension.dll
 
 #---------------------------------- Content ---------------------------------#
 
@@ -134,6 +135,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:level2.png
+
+#begin Level2.tmap
+/importer:TileMapImporter
+/processor:TileMapProcessor
+/processorParam:Scale=1
+/build:Level2.tmap
 
 #begin menufont.spritefont
 /importer:FontDescriptionImporter
