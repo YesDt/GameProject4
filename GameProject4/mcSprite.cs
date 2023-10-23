@@ -38,7 +38,7 @@ namespace GameProject4
         private KeyboardState priorKeyboardState;
 
 
-        private BoundingRectangle _bounds = new BoundingRectangle(new Vector2(200 - 32, 300 - 32), 48, 130);
+        private BoundingRectangle _bounds;
 
         private float _velocityY = 0;
 
@@ -80,6 +80,7 @@ namespace GameProject4
         public mcSprite(Vector2 pos)
         {
             _position = pos;
+            _bounds = new BoundingRectangle(new Vector2(_position.X - 32, _position.Y - 32), 48, 130);
         }
 
         /// <summary>

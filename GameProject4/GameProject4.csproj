@@ -12,6 +12,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Content\Level2.tsx" />
     <None Remove="Content\Sprite_MC.png" />
   </ItemGroup>
   <ItemGroup>
