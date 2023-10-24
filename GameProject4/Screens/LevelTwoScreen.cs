@@ -87,8 +87,8 @@ namespace GameProject4.Screens
                 _content = new ContentManager(ScreenManager.Game.Services, "Content");
 
             _gameFont = _content.Load<SpriteFont>("gamefont");
-            _level2 = _content.Load<Texture2D>("level2");
-            //_tilemap = _content.Load<TileMap>("TheSecondLevel");
+            //_level2 = _content.Load<Texture2D>("level2");
+            _tilemap = _content.Load<TileMap>("TheSecondLevel");
 
             circle = _content.Load<Texture2D>("circle");
 
@@ -254,8 +254,8 @@ namespace GameProject4.Screens
             spriteBatch.Begin(transformMatrix: transform);
 
 
-            //_tilemap.Draw(gameTime, _spriteBatch);
-            spriteBatch.Draw(_level2, new Vector2(0, 0), null, Color.White, 0f, new Vector2(0, 0), 1.5f, SpriteEffects.None, 0f);
+            _tilemap.Draw(gameTime, _spriteBatch);
+            //spriteBatch.Draw(_level2, new Vector2(0, 0), null, Color.White, 0f, new Vector2(0, 0), 1.5f, SpriteEffects.None, 0f);
             foreach (var coin in _coins)
             {
                 coin.Draw(gameTime, spriteBatch);

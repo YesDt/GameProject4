@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace TileMapExtension
 {
-    [ContentSerializerRuntimeType("ExampleGame.BasicTilemap, ExampleGame")]
+    [ContentSerializerRuntimeType("GameProject4.TileMap, GameProject4")]
     public class TileMapContent
     {
         /// <summary>Map dimensions</summary>
