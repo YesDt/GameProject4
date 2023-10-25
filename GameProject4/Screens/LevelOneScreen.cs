@@ -25,6 +25,7 @@ namespace GameProject4.Screens
         private GraphicsDevice _graphics;
         private SpriteBatch _spriteBatch;
 
+
         private ContentManager _content;
 
         private SpriteFont _gameFont;
@@ -65,7 +66,7 @@ namespace GameProject4.Screens
 
         public LevelOneScreen()
         {
-
+            //ScreenManager.gameState = GameState.LevelOne;
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
 

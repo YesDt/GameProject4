@@ -9,10 +9,11 @@ using System.Windows.Forms;
 
 namespace GameProject4.Screens
 {
+
+
     // The main menu screen is the first thing displayed when the game starts up.
     public class MainMenuScreen : MenuScreen
     {
-
         public MainMenuScreen() : base("Gold Rush")
         {
             var playGameMenuEntry = new MenuEntry("Play Game");
@@ -30,7 +31,8 @@ namespace GameProject4.Screens
 
         private void PlayGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            LoadingScreen.Load(ScreenManager, true, e.PlayerIndex, new LevelOneScreen());
+            
+           if (ScreenManager.gameState == GameState.LevelOne) LoadingScreen.Load(ScreenManager, true, e.PlayerIndex, new LevelOneScreen());
         }
 
         private void ControlsEntrySelected(object sender, PlayerIndexEventArgs e)

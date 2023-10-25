@@ -9,6 +9,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameProject4.StateManagement
 {
+
+    public enum GameState
+    {
+        LevelOne = 0,
+        LevelTwo = 1
+    }
+
     /// <summary>
     /// The ScreenManager is a component which manages one or more GameScreen instance.
     /// It maintains a stack of screens, calls their Update and Draw methods when 
@@ -24,6 +31,7 @@ namespace GameProject4.StateManagement
 
         private bool _isInitialized;
 
+        public GameState gameState;
 
         public Game Game { get; private set; }
 

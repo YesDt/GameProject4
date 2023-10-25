@@ -64,7 +64,7 @@ namespace GameProject4.Screens
 
         public LevelTwoScreen()
         {
-
+            //ScreenManager.gameState = GameState.LevelTwo;
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
 
@@ -199,6 +199,7 @@ namespace GameProject4.Screens
                 if (_noCoinsLeft)
                 {
                     MediaPlayer.Stop();
+                    //ScreenManager.gameState = GameState.LevelOne;
                     LoadingScreen.Load(ScreenManager, false, null, new MaintainenceScreen());
                 }
 
@@ -242,6 +243,7 @@ namespace GameProject4.Screens
         {
             float playerX = MathHelper.Clamp(_mc.Position.X, 300, 700);
             float offset = 300 - playerX;
+
 
 
             Matrix transform;
