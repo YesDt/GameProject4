@@ -66,6 +66,8 @@ namespace GameProject4
 
         public Action action;
 
+        public float Wall;
+
 
         public Vector2 Position => _position;
 
@@ -198,7 +200,7 @@ namespace GameProject4
 
 
             if (_position.X < 0) _position.X = 0;
-            if (_position.X > 1150) _position.X = 1150;
+            if (_position.X > Wall) _position.X = Wall;
 
             _bounds.X = _position.X;
             _bounds.Y = _position.Y;

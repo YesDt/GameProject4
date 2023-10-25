@@ -102,7 +102,7 @@ namespace GameProject4.Screens
             // it should not try to catch up.
             ScreenManager.Game.ResetElapsedTime();
             _mc.LoadContent(_content);
-
+            _mc.Wall = 1150;
             _platforms = new Platform(new Vector2(200, 423), new BoundingRectangle(new Vector2(200 - 200, 423), 1200f, 2));
 
 
