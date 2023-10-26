@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using GameProject4.StateManagement;
 using System.Windows.Forms;
+using System.IO;
 
 namespace GameProject4.Screens
 {
@@ -16,6 +17,7 @@ namespace GameProject4.Screens
     {
         public MainMenuScreen() : base("Gold Rush")
         {
+            
             var playGameMenuEntry = new MenuEntry("Play Game");
             var controlsEntry = new MenuEntry("Controls");
             var exitMenuEntry = new MenuEntry("Exit");
@@ -31,8 +33,9 @@ namespace GameProject4.Screens
 
         private void PlayGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
+
             
-           if (ScreenManager.gameState == GameState.LevelOne) LoadingScreen.Load(ScreenManager, true, e.PlayerIndex, new LevelOneScreen());
+            if (ScreenManager.gameState == GameState.LevelOne) LoadingScreen.Load(ScreenManager, true, e.PlayerIndex, new LevelOneScreen());
         }
 
         private void ControlsEntrySelected(object sender, PlayerIndexEventArgs e)

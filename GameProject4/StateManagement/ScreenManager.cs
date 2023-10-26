@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +29,8 @@ namespace GameProject4.StateManagement
 
         private readonly ContentManager _content;
         private readonly InputState _input = new InputState();
+
+        public static StreamWriter SWprogress = new StreamWriter("progress.txt", false);
 
         private bool _isInitialized;
 

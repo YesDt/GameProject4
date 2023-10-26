@@ -15,6 +15,8 @@ using GameProject4.StateManagement;
 using System.Threading;
 using GameProject4.Particles;
 using GameProject4.Collisions;
+using System.IO;
+
 namespace GameProject4.Screens
 {
     public class LevelTwoScreen: GameScreen, IParticleEmitter
@@ -64,6 +66,22 @@ namespace GameProject4.Screens
 
         public LevelTwoScreen()
         {
+            string text = File.ReadAllText("progress.txt");
+            if (text.Contains("Level: Level 1"))
+            {
+                text = text.Replace("Level: Level 1", "Level: Level 2");
+                File.WriteAllText("progress.txt", text);
+
+
+            }
+            else
+            {
+                using (ScreenManager.SWprogress)
+                {
+                    ScreenManager.SWprogress.WriteLine("Level: Level 2");
+                }
+            }
+
             //ScreenManager.gameState = GameState.LevelTwo;
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
