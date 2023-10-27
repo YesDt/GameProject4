@@ -195,55 +195,31 @@ namespace GameProject4.Screens
                     if (plat.Bounds.CollidesWith(_mc.Bounds))
                     {
 
-                        
+
                         if (plat.Bounds.Top < _mc.Bounds.Bottom)
                         {
                             _mc.offGround = false;
                         }
-                        else if (plat.Bounds.Bottom > _mc.Bounds.Top)
+                        else
                         {
-                            _mc.collidingAbove = true;
-                            _mc.Collisions(plat.Bounds);
+                            _mc.offGround = true;
                         }
-                        else if (plat.Bounds.Left > _mc.Bounds.Right)
-                        {
-                            _mc.collidingRight = true;
-                            _mc.Collisions(plat.Bounds);
-                        }
-                        else if (plat.Bounds.Right < _mc.Bounds.Left)
-                        {
-                            _mc.collidingLeft = true;
-                            _mc.Collisions(plat.Bounds);
-                        }
-                    
+                        
+                            _mc.CollisionHandling(plat.Bounds);
+
                     }
                     else
                     {
                         _mc.offGround = true;
                     }
-                    
+
                 }
-                //foreach (Platform plat in _platforms)
-                //{
-                //    if (plat.Bounds.CollidesWith(_mc.Bounds))
-                //    {
-                //        if (_mc.Bounds.Bottom >= plat.Bounds.Top)
-                //        {
-                //            _mc.offGround = false;
-                //        }
-                //        else
-                //        {
-                //            _mc.offGround = true;
-                //        }
-                //        _mc.CollisionHandling(plat.Bounds);
-                //    }
+               
 
-                //}
-
-                //var targetPosition = new Vector2(
-                //    ScreenManager.GraphicsDevice.Viewport.Width / 2 - _gameFont.MeasureString("Insert Gameplay Here").X / 2,
-                //    200);
-                foreach (var coin in _coins)
+                    //var targetPosition = new Vector2(
+                    //    ScreenManager.GraphicsDevice.Viewport.Width / 2 - _gameFont.MeasureString("Insert Gameplay Here").X / 2,
+                    //    200);
+                    foreach (var coin in _coins)
                 {
                     if (!coin.Collected && coin.Bounds.CollidesWith(_mc.Bounds))
                     {
@@ -351,6 +327,10 @@ namespace GameProject4.Screens
                 spriteBatch.Draw(circle, new Vector2(_mc.Bounds.Right, _mc.Bounds.Top), null, Color.Red, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
                 spriteBatch.Draw(circle, new Vector2(_mc.Bounds.Left, _mc.Bounds.Bottom), null, Color.Blue, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
                 spriteBatch.Draw(circle, new Vector2(_mc.Bounds.Right, _mc.Bounds.Bottom), null, Color.Green, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(circle, new Vector2(_mc.FeetBounds.Left, _mc.FeetBounds.Top), null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(circle, new Vector2(_mc.FeetBounds.Right, _mc.FeetBounds.Top), null, Color.Red, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(circle, new Vector2(_mc.FeetBounds.Left, _mc.FeetBounds.Bottom), null, Color.Blue, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(circle, new Vector2(_mc.FeetBounds.Right, _mc.FeetBounds.Bottom), null, Color.Green, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
             }
 
             spriteBatch.End();

@@ -8,6 +8,7 @@ using GameProject4.StateManagement;
 using System.Windows.Forms;
 using System.IO;
 
+
 namespace GameProject4.Screens
 {
 
@@ -34,8 +35,12 @@ namespace GameProject4.Screens
         private void PlayGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
 
-            
-            if (ScreenManager.gameState == GameState.LevelOne) LoadingScreen.Load(ScreenManager, true, e.PlayerIndex, new LevelOneScreen());
+            string text = File.ReadAllText("progress.txt");
+            if (text.Contains("Level: Level 2")) LoadingScreen.Load(ScreenManager, true, e.PlayerIndex, new LevelTwoScreen());
+            else
+            {
+                LoadingScreen.Load(ScreenManager, true, e.PlayerIndex, new LevelOneScreen());
+            }
         }
 
         private void ControlsEntrySelected(object sender, PlayerIndexEventArgs e)

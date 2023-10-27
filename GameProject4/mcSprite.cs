@@ -40,6 +40,8 @@ namespace GameProject4
 
         private BoundingRectangle _bounds;
 
+        private BoundingRectangle _feet;
+
         private float _velocityY = 0;
 
         private float _gravity;
@@ -55,12 +57,6 @@ namespace GameProject4
         private bool _flipped;
 
         public bool offGround = false;
-
-        public bool collidingAbove = false;
-
-        public bool collidingLeft = false;
-
-        public bool collidingRight = false;
 
         private bool _attacked = false;
 
@@ -81,6 +77,8 @@ namespace GameProject4
         /// Boundaries for the bounding rectangle of the sprite
         /// </summary>
         public BoundingRectangle Bounds => _bounds;
+
+        public BoundingRectangle FeetBounds => _feet;
         #endregion
 
         #region publicMethods
@@ -89,6 +87,7 @@ namespace GameProject4
         {
             _position = pos;
             _bounds = new BoundingRectangle(new Vector2(_position.X - 32, _position.Y - 32), 48, 130);
+            _feet = new BoundingRectangle(new(_bounds.X, _bounds.Y + 32), 48, 32);
         }
 
         /// <summary>
@@ -209,40 +208,38 @@ namespace GameProject4
 
             _bounds.X = _position.X;
             _bounds.Y = _position.Y;
+            _feet.X = _position.X;
+            _feet.Y = _bounds.Bottom;
         }
 
 
-        public void Collisions(BoundingRectangle rect)
-        {
-            if (collidingAbove) _position.Y = rect.Bottom - 0.1f;
-            if (collidingLeft) _position.X = rect.Right - 0.1f;
-            if (collidingRight) _position.X = rect.Left - 0.1f;
-        }
+        //public void Collisions(BoundingRectangle rect)
+        //{
+        //    if (collidingAbove) _position.Y = rect.Bottom - 0.1f;
+        //    if (collidingLeft) _position.X = rect.Right - 0.1f;
+        //    if (collidingRight) _position.X = rect.Left - 0.1f;
+        //}
 
         public void CollisionHandling(BoundingRectangle rect)
         {
-            //if (_bounds.Bottom >= rect.Top)
-            //{
-            //    offGround = false;
-            //}
-            //else
-            //{
-            //    offGround = true;
-            //}
-            if (_bounds.Top < rect.Bottom)
+            
+            if (_bounds.Top > rect.Bottom)
             {
-                offGround = true;
-                _position.Y = rect.Bottom;
+                
+                _position.Y -= 10f ;
+                
             }
-            else if (_bounds.Right > rect.Left)
+            else if (_bounds.Bottom < rect.Top && _position.X > rect.Left)
             {
-                offGround = true;
-                _position.X = rect.Left;
+                
+                _position.X -= 10f;
+                
             }
-            else if (_bounds.Left < rect.Right)
+            else if (_bounds.Bottom < rect.Top && _position.X < rect.Right)
             {
-                offGround = true;
-                _position.X = rect.Right;
+                
+                _position.X += 10f;
+               
             }
 
         }

@@ -12,9 +12,10 @@ namespace GameProject4
     {
         private GraphicsDeviceManager _graphics;
         private readonly ScreenManager _screenManager;
-       
 
 
+        public static StreamWriter SWprogress = new StreamWriter("progress.txt", false);
+        
         public GraphicsDeviceManager Graphics => _graphics;
 
         public Game1()
@@ -22,6 +23,8 @@ namespace GameProject4
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            File.WriteAllText("progress.txt", "");
 
             var screenFactory = new ScreenFactory();
             Services.AddService(typeof(IScreenFactory), screenFactory);

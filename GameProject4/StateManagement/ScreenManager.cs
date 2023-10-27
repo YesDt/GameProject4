@@ -30,7 +30,7 @@ namespace GameProject4.StateManagement
         private readonly ContentManager _content;
         private readonly InputState _input = new InputState();
 
-        public static StreamWriter SWprogress = new StreamWriter("progress.txt", false);
+        
 
         private bool _isInitialized;
 
