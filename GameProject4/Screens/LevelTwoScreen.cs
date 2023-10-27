@@ -223,11 +223,19 @@ namespace GameProject4.Screens
                     }
                     
                 }
-                //for(int i = 0; i < _platforms.Length; i++)
+                //foreach (Platform plat in _platforms)
                 //{
-                //    if (_platforms[i].Bounds.CollidesWith(_mc.Bounds))
+                //    if (plat.Bounds.CollidesWith(_mc.Bounds))
                 //    {
-
+                //        if (_mc.Bounds.Bottom >= plat.Bounds.Top)
+                //        {
+                //            _mc.offGround = false;
+                //        }
+                //        else
+                //        {
+                //            _mc.offGround = true;
+                //        }
+                //        _mc.CollisionHandling(plat.Bounds);
                 //    }
 
                 //}

@@ -215,12 +215,38 @@ namespace GameProject4
 
         public void Collisions(BoundingRectangle rect)
         {
-            if (collidingAbove) _position.Y += 0;
-            if (collidingLeft) _position.X -= 0;
-            if (collidingRight) _position.X += 0;
+            if (collidingAbove) _position.Y = rect.Bottom - 0.1f;
+            if (collidingLeft) _position.X = rect.Right - 0.1f;
+            if (collidingRight) _position.X = rect.Left - 0.1f;
         }
 
+        //public void CollisionHandling(BoundingRectangle rect)
+        //{
+        //    //if (_bounds.Bottom >= rect.Top)
+        //    //{
+        //    //    offGround = false;
+        //    //}
+        //    //else
+        //    //{
+        //    //    offGround = true;
+        //    //}
+        //    if (_bounds.Top < rect.Bottom)
+        //    {
+        //        offGround = true;
+        //        _position.Y = rect.Bottom;
+        //    }
+        //    else if (_bounds.Right > rect.Left)
+        //    {
+        //        offGround = true;
+        //        _position.X = rect.Left;
+        //    }
+        //    else if (_bounds.Left < rect.Right)
+        //    {
+        //        offGround = true;
+        //        _position.X = rect.Right;
+        //    }
 
+        //}
 
 
         /// <summary>
