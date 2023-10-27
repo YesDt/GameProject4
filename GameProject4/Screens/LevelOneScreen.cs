@@ -68,24 +68,18 @@ namespace GameProject4.Screens
 
         public LevelOneScreen()
         {
-
-            string text = File.ReadAllText("progress.txt");
-            if (text.Contains("Level: Level 2"))
-            {
-                text = text.Replace("Level: Level 2", "Level: Level 1");
-                File.WriteAllText("progress.txt", text);
-
-
-            }
-            else
-            {
-                using (ScreenManager.SWprogress)
-                {
-                    ScreenManager.SWprogress.WriteLine("Level: Level 1");
-                }
-            }
             
-            
+            File.WriteAllText("progress.txt", "");
+            using (StreamWriter sw = new StreamWriter("progress.txt"))
+            {
+
+                sw.WriteLine("Level: Level 1");
+            }
+
+       
+
+
+
             //ScreenManager.gameState = GameState.LevelOne;
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);

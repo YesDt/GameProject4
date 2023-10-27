@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using GameProject4.StateManagement;
 using GameProject4.Screens;
 using System.IO;
+using System.Text;
 
 namespace GameProject4
 {

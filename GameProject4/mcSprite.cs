@@ -215,9 +215,9 @@ namespace GameProject4
 
         public void Collisions(BoundingRectangle rect)
         {
-            if (collidingAbove) _position.Y = rect.Bottom - 0.1f;
-            if (collidingLeft) _position.X = rect.Right - 0.1f;
-            if (collidingRight) _position.X = rect.Left - 0.1f;
+            if (collidingAbove) _position.Y += 0;
+            if (collidingLeft) _position.X -= 0;
+            if (collidingRight) _position.X += 0;
         }
 
 

@@ -34,7 +34,7 @@ namespace GameProject4.Screens
         private Platform[] _platforms;
 
 
-        private Texture2D _level2;
+        //private Texture2D _level2;
         private TileMap _tilemap;
 
         public Texture2D circle;
@@ -76,9 +76,10 @@ namespace GameProject4.Screens
             }
             else
             {
-                using (ScreenManager.SWprogress)
+                using (StreamWriter sw = new StreamWriter("progress.txt"))
                 {
-                    ScreenManager.SWprogress.WriteLine("Level: Level 2");
+
+                    sw.WriteLine("Level: Level 2");
                 }
             }
 
@@ -126,7 +127,8 @@ namespace GameProject4.Screens
 
             {
                 new Platform(new Vector2(200, 423), new BoundingRectangle(new Vector2(200 - 200, 423), 300f, 300)),
-                //new Platform(new Vector2(400, 423), new BoundingRectangle(new Vector2(400, 423), 300f, 300))
+                //new Platform(new Vector2(200, 425), new BoundingRectangle(new Vector2(200 - 200, 423), 300f, 300)),
+                //new Platform(new Vector2(800, 390), new BoundingRectangle(new Vector2(800, 390), 300f, 300))
 
             };
 
@@ -192,37 +194,44 @@ namespace GameProject4.Screens
                 {
                     if (plat.Bounds.CollidesWith(_mc.Bounds))
                     {
-                        
 
-                        if (plat.Bounds.Top == _mc.Bounds.Bottom) _mc.offGround = false;
-                        else if (plat.Bounds.Bottom == _mc.Bounds.Top)
+                        
+                        if (plat.Bounds.Top < _mc.Bounds.Bottom)
+                        {
+                            _mc.offGround = false;
+                        }
+                        else if (plat.Bounds.Bottom > _mc.Bounds.Top)
                         {
                             _mc.collidingAbove = true;
                             _mc.Collisions(plat.Bounds);
                         }
-                        else if (plat.Bounds.Left == _mc.Bounds.Right)
+                        else if (plat.Bounds.Left > _mc.Bounds.Right)
                         {
                             _mc.collidingRight = true;
                             _mc.Collisions(plat.Bounds);
                         }
-                        else if (plat.Bounds.Right == _mc.Bounds.Left)
+                        else if (plat.Bounds.Right < _mc.Bounds.Left)
                         {
                             _mc.collidingLeft = true;
                             _mc.Collisions(plat.Bounds);
                         }
-                        else
-                        {
-                            _mc.offGround = false;
-                        }
-
-
+                    
                     }
                     else
                     {
                         _mc.offGround = true;
                     }
+                    
                 }
-                
+                //for(int i = 0; i < _platforms.Length; i++)
+                //{
+                //    if (_platforms[i].Bounds.CollidesWith(_mc.Bounds))
+                //    {
+
+                //    }
+
+                //}
+
                 //var targetPosition = new Vector2(
                 //    ScreenManager.GraphicsDevice.Viewport.Width / 2 - _gameFont.MeasureString("Insert Gameplay Here").X / 2,
                 //    200);
@@ -324,6 +333,18 @@ namespace GameProject4.Screens
 
             _mc.Draw(gameTime, spriteBatch);
 
+            foreach (Platform plat in _platforms)
+            {
+                spriteBatch.Draw(circle, new Vector2(plat.Bounds.Left, plat.Bounds.Top), null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(circle, new Vector2(plat.Bounds.Right, plat.Bounds.Top), null, Color.Red, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(circle, new Vector2(plat.Bounds.Left, plat.Bounds.Bottom), null, Color.Blue, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(circle, new Vector2(plat.Bounds.Right, plat.Bounds.Bottom), null, Color.Green, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(circle, new Vector2(_mc.Bounds.Left, _mc.Bounds.Top), null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(circle, new Vector2(_mc.Bounds.Right, _mc.Bounds.Top), null, Color.Red, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(circle, new Vector2(_mc.Bounds.Left, _mc.Bounds.Bottom), null, Color.Blue, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(circle, new Vector2(_mc.Bounds.Right, _mc.Bounds.Bottom), null, Color.Green, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+            }
+
             spriteBatch.End();
 
 
@@ -333,14 +354,7 @@ namespace GameProject4.Screens
 
             //spriteBatch.Draw(circle, new Vector2(_mc.Bounds.Left, _mc.Bounds.Bottom), null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
 
-            foreach (Platform plat in _platforms)
-            {
-                spriteBatch.Draw(circle, new Vector2(plat.Bounds.Left, plat.Bounds.Top), null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-                spriteBatch.Draw(circle, new Vector2(plat.Bounds.Right, plat.Bounds.Top), null, Color.Red, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-                spriteBatch.Draw(circle, new Vector2(plat.Bounds.Left, plat.Bounds.Bottom), null, Color.Blue, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-                spriteBatch.Draw(circle, new Vector2(plat.Bounds.Right, plat.Bounds.Bottom), null, Color.Green, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-                //spriteBatch.Draw(circle, new Vector2(plat.), null, Color.Green, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-            }
+            
             //spriteBatch.Draw(circle, _platforms.Position, null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
 
             spriteBatch.End();
