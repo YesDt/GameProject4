@@ -56,6 +56,12 @@ namespace GameProject4
 
         public bool offGround = false;
 
+        public bool collidingAbove = false;
+
+        public bool collidingLeft = false;
+
+        public bool collidingRight = false;
+
         private bool _attacked = false;
 
         private Vector2 direction;
@@ -205,6 +211,17 @@ namespace GameProject4
             _bounds.X = _position.X;
             _bounds.Y = _position.Y;
         }
+
+
+        public void Collisions(BoundingRectangle rect)
+        {
+            if (collidingAbove) _position.Y = rect.Bottom - 0.1f;
+            if (collidingLeft) _position.X = rect.Right - 0.1f;
+            if (collidingRight) _position.X = rect.Left - 0.1f;
+        }
+
+
+
 
         /// <summary>
         /// Draws the main character
