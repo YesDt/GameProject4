@@ -192,19 +192,23 @@ namespace GameProject4.Screens
                 {
                     if (plat.Bounds.CollidesWith(_mc.Bounds))
                     {
+                        
 
                         if (plat.Bounds.Top == _mc.Bounds.Bottom) _mc.offGround = false;
                         else if (plat.Bounds.Bottom == _mc.Bounds.Top)
                         {
                             _mc.collidingAbove = true;
+                            _mc.Collisions(plat.Bounds);
                         }
                         else if (plat.Bounds.Left == _mc.Bounds.Right)
                         {
                             _mc.collidingRight = true;
+                            _mc.Collisions(plat.Bounds);
                         }
                         else if (plat.Bounds.Right == _mc.Bounds.Left)
                         {
                             _mc.collidingLeft = true;
+                            _mc.Collisions(plat.Bounds);
                         }
                         else
                         {
