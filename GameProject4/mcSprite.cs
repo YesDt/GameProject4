@@ -97,7 +97,7 @@ namespace GameProject4
         /// <param name="content">ContentManager</param>
         public void LoadContent(ContentManager content)
         {
-            _texture = content.Load<Texture2D>("Sprite_MC");
+            _texture = content.Load<Texture2D>("Sprite_MC1");
 
 
         }
@@ -163,13 +163,12 @@ namespace GameProject4
                 action = Action.Jumping;
                 _velocityY += _gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 _position.Y += _velocityY;
-                //_position.Y += gravity;
+                
 
             }
             //Jump Function
             if (currentKeyboardState.IsKeyDown(Keys.Space) && !offGround)
             {
-                //_offGround = true;
                 _velocityY -= _jumpHeight;
                 if (!_attacked)_animationFrame = 0;
                 if (!_attacked) _animationTimer = 0;
@@ -220,33 +219,33 @@ namespace GameProject4
             if (collidingRight) _position.X = rect.Left - 0.1f;
         }
 
-        //public void CollisionHandling(BoundingRectangle rect)
-        //{
-        //    //if (_bounds.Bottom >= rect.Top)
-        //    //{
-        //    //    offGround = false;
-        //    //}
-        //    //else
-        //    //{
-        //    //    offGround = true;
-        //    //}
-        //    if (_bounds.Top < rect.Bottom)
-        //    {
-        //        offGround = true;
-        //        _position.Y = rect.Bottom;
-        //    }
-        //    else if (_bounds.Right > rect.Left)
-        //    {
-        //        offGround = true;
-        //        _position.X = rect.Left;
-        //    }
-        //    else if (_bounds.Left < rect.Right)
-        //    {
-        //        offGround = true;
-        //        _position.X = rect.Right;
-        //    }
+        public void CollisionHandling(BoundingRectangle rect)
+        {
+            //if (_bounds.Bottom >= rect.Top)
+            //{
+            //    offGround = false;
+            //}
+            //else
+            //{
+            //    offGround = true;
+            //}
+            if (_bounds.Top < rect.Bottom)
+            {
+                offGround = true;
+                _position.Y = rect.Bottom;
+            }
+            else if (_bounds.Right > rect.Left)
+            {
+                offGround = true;
+                _position.X = rect.Left;
+            }
+            else if (_bounds.Left < rect.Right)
+            {
+                offGround = true;
+                _position.X = rect.Right;
+            }
 
-        //}
+        }
 
 
         /// <summary>
