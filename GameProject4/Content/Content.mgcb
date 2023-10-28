@@ -57,12 +57,6 @@
 /processorParam:TextureFormat=Compressed
 /build:CoinsLeft.spritefont
 
-#begin example.tmap
-/importer:TileMapImporter
-/processor:TileMapProcessor
-/processorParam:Scale=1
-/build:example.tmap
-
 #begin gamefont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -105,6 +99,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:gameproject2titlescreen.png
+
+#begin GP4Level2.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:GP4Level2.mp3
 
 #begin gradient.png
 /importer:TextureImporter
@@ -167,7 +167,7 @@
 /processorParam:Quality=Best
 /build:Project2music.mp3
 
-#begin Sprite_MC.png
+#begin Sprite_Finish.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -177,7 +177,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprite_MC.png
+/build:Sprite_Finish.png
 
 #begin Sprite_MC1.png
 /importer:TextureImporter

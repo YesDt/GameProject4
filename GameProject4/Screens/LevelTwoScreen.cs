@@ -32,6 +32,7 @@ namespace GameProject4.Screens
         private mcSprite _mc = new mcSprite(new Vector2(200, 300));
         private CoinSprite[] _coins;
         private Platform[] _platforms;
+        private Goal _goal = new Goal(new Vector2(600, 423), new BoundingRectangle(new Vector2(600, 423), 300f, 300));
 
 
         //private Texture2D _level2;
@@ -126,26 +127,26 @@ namespace GameProject4.Screens
             _platforms = new Platform[]
 
             {
-                new Platform(new Vector2(200, 423), new BoundingRectangle(new Vector2(200 - 200, 423), 300f, 300)),
-                //new Platform(new Vector2(200, 425), new BoundingRectangle(new Vector2(200 - 200, 423), 300f, 300)),
+                new Platform(new Vector2(200, 423), new BoundingRectangle(new Vector2(200 - 200, 423), 300f, 300)), 
+                
                 //new Platform(new Vector2(800, 390), new BoundingRectangle(new Vector2(800, 390), 300f, 300))
 
             };
 
 
+            _goal.LoadContent(_content);
+
             _coinCounter = _content.Load<SpriteFont>("CoinsLeft");
             _coins = new CoinSprite[]
             {
                 new CoinSprite(new Vector2(300, 300)),
-                new CoinSprite(new Vector2(700, 300)),
+
                 new CoinSprite(new Vector2(5, 300)),
+                new CoinSprite(new Vector2(10, 350)),
                 new CoinSprite(new Vector2(80, 250)),
-                new CoinSprite(new Vector2(543, 300)),
-                new CoinSprite(new Vector2(723, 300)),
+
                 new CoinSprite(new Vector2(400, 300)),
-                new CoinSprite(new Vector2(1000, 300)),
-                new CoinSprite(new Vector2(1100, 300)),
-                new CoinSprite(new Vector2(900, 250)),
+
                 new CoinSprite(new Vector2(392, 300))
             };
             _coinsLeft = _coins.Length;
@@ -154,7 +155,7 @@ namespace GameProject4.Screens
 
 
             _coinPickup = _content.Load<SoundEffect>("Pickup_Coin15");
-            _backgroundMusic = _content.Load<Song>("Project2music");
+            _backgroundMusic = _content.Load<Song>("GP4Level2");
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(_backgroundMusic);
 
@@ -176,13 +177,10 @@ namespace GameProject4.Screens
             _content.Unload();
         }
 
-        // This method checks the GameScreen.IsActive property, so the game will
-        // stop updating when the pause menu is active, or if you tab away to a different application.
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
             base.Update(gameTime, otherScreenHasFocus, false);
 
-            // Gradually fade in or out depending on whether we are covered by the pause screen.
             if (coveredByOtherScreen)
                 _pauseAlpha = Math.Min(_pauseAlpha + 1f / 32, 1);
             else
@@ -192,33 +190,20 @@ namespace GameProject4.Screens
             {
                 foreach(Platform plat in _platforms)
                 {
-                    if (plat.Bounds.CollidesWith(_mc.Bounds))
+                    if (plat.Bounds.CollidesWith(_mc.FeetBounds))
                     {
+                        _mc.CollisionHandling(plat.Bounds);
 
-
-                        if (plat.Bounds.Top < _mc.Bounds.Bottom)
-                        {
-                            _mc.offGround = false;
-                        }
-                        else
-                        {
-                            _mc.offGround = true;
-                        }
-                        
-                            _mc.CollisionHandling(plat.Bounds);
 
                     }
                     else
                     {
                         _mc.offGround = true;
                     }
+                    
 
                 }
                
-
-                    //var targetPosition = new Vector2(
-                    //    ScreenManager.GraphicsDevice.Viewport.Width / 2 - _gameFont.MeasureString("Insert Gameplay Here").X / 2,
-                    //    200);
                     foreach (var coin in _coins)
                 {
                     if (!coin.Collected && coin.Bounds.CollidesWith(_mc.Bounds))
@@ -239,13 +224,15 @@ namespace GameProject4.Screens
                 {
                     _noCoinsLeft = true;
                 }
-                if (_noCoinsLeft)
+                
+                
+
+                if (_mc.Bounds.CollidesWith(_goal.Bounds))
                 {
                     MediaPlayer.Stop();
-                    //ScreenManager.gameState = GameState.LevelOne;
-                    LoadingScreen.Load(ScreenManager, false, null, new MaintainenceScreen());
+                    File.WriteAllText("progress.txt", "");
+                     LoadingScreen.Load(ScreenManager, false, null, new MaintainenceScreen());
                 }
-
             }
         }
 
@@ -278,7 +265,10 @@ namespace GameProject4.Screens
                 MediaPlayer.Resume();
 
                 _mc.Update(gameTime);
-
+                if (_mc.Position.Y >= 600)
+                {
+                    LoadingScreen.Load(ScreenManager, false, player, new LevelTwoScreen());
+                }
             }
         }
 
@@ -290,7 +280,6 @@ namespace GameProject4.Screens
 
 
             Matrix transform;
-            // This game has a blue background. Why? Because!
             ScreenManager.GraphicsDevice.Clear(ClearOptions.Target, Color.CornflowerBlue, 0, 0);
 
             var spriteBatch = ScreenManager.SpriteBatch;
@@ -301,7 +290,6 @@ namespace GameProject4.Screens
 
 
             _tilemap.Draw(gameTime, _spriteBatch);
-            //spriteBatch.Draw(_level2, new Vector2(0, 0), null, Color.White, 0f, new Vector2(0, 0), 1.5f, SpriteEffects.None, 0f);
             foreach (var coin in _coins)
             {
                 coin.Draw(gameTime, spriteBatch);
@@ -313,25 +301,27 @@ namespace GameProject4.Screens
 
                 }
             }
+            _goal.Draw(spriteBatch, gameTime);
 
 
             _mc.Draw(gameTime, spriteBatch);
 
-            foreach (Platform plat in _platforms)
-            {
-                spriteBatch.Draw(circle, new Vector2(plat.Bounds.Left, plat.Bounds.Top), null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-                spriteBatch.Draw(circle, new Vector2(plat.Bounds.Right, plat.Bounds.Top), null, Color.Red, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-                spriteBatch.Draw(circle, new Vector2(plat.Bounds.Left, plat.Bounds.Bottom), null, Color.Blue, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-                spriteBatch.Draw(circle, new Vector2(plat.Bounds.Right, plat.Bounds.Bottom), null, Color.Green, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-                spriteBatch.Draw(circle, new Vector2(_mc.Bounds.Left, _mc.Bounds.Top), null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-                spriteBatch.Draw(circle, new Vector2(_mc.Bounds.Right, _mc.Bounds.Top), null, Color.Red, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-                spriteBatch.Draw(circle, new Vector2(_mc.Bounds.Left, _mc.Bounds.Bottom), null, Color.Blue, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-                spriteBatch.Draw(circle, new Vector2(_mc.Bounds.Right, _mc.Bounds.Bottom), null, Color.Green, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-                spriteBatch.Draw(circle, new Vector2(_mc.FeetBounds.Left, _mc.FeetBounds.Top), null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-                spriteBatch.Draw(circle, new Vector2(_mc.FeetBounds.Right, _mc.FeetBounds.Top), null, Color.Red, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-                spriteBatch.Draw(circle, new Vector2(_mc.FeetBounds.Left, _mc.FeetBounds.Bottom), null, Color.Blue, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-                spriteBatch.Draw(circle, new Vector2(_mc.FeetBounds.Right, _mc.FeetBounds.Bottom), null, Color.Green, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-            }
+            //Debugging purposes
+            //foreach (Platform plat in _platforms)
+            //{
+            //    spriteBatch.Draw(circle, new Vector2(plat.Bounds.Left, plat.Bounds.Top), null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+            //    spriteBatch.Draw(circle, new Vector2(plat.Bounds.Right, plat.Bounds.Top), null, Color.Red, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+            //    spriteBatch.Draw(circle, new Vector2(plat.Bounds.Left, plat.Bounds.Bottom), null, Color.Blue, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+            //    spriteBatch.Draw(circle, new Vector2(plat.Bounds.Right, plat.Bounds.Bottom), null, Color.Green, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+            //    spriteBatch.Draw(circle, new Vector2(_mc.Bounds.Left, _mc.Bounds.Top), null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+            //    spriteBatch.Draw(circle, new Vector2(_mc.Bounds.Right, _mc.Bounds.Top), null, Color.Red, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+            //    spriteBatch.Draw(circle, new Vector2(_mc.Bounds.Left, _mc.Bounds.Bottom), null, Color.Blue, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+            //    spriteBatch.Draw(circle, new Vector2(_mc.Bounds.Right, _mc.Bounds.Bottom), null, Color.Green, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+            //    spriteBatch.Draw(circle, new Vector2(_mc.FeetBounds.Left, _mc.FeetBounds.Top), null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+            //    spriteBatch.Draw(circle, new Vector2(_mc.FeetBounds.Right, _mc.FeetBounds.Top), null, Color.Red, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+            //    spriteBatch.Draw(circle, new Vector2(_mc.FeetBounds.Left, _mc.FeetBounds.Bottom), null, Color.Blue, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+            //    spriteBatch.Draw(circle, new Vector2(_mc.FeetBounds.Right, _mc.FeetBounds.Bottom), null, Color.Green, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+            //}
 
             spriteBatch.End();
 
@@ -340,14 +330,9 @@ namespace GameProject4.Screens
 
             spriteBatch.DrawString(_coinCounter, $"Coins Left: {_coinsLeft}", new Vector2(2, 2), Color.Gold);
 
-            //spriteBatch.Draw(circle, new Vector2(_mc.Bounds.Left, _mc.Bounds.Bottom), null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-
-            
-            //spriteBatch.Draw(circle, _platforms.Position, null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
 
             spriteBatch.End();
 
-            // If the game is transitioning on or off, fade it out to black.
             if (TransitionPosition > 0 || _pauseAlpha > 0)
             {
                 float alpha = MathHelper.Lerp(1f - TransitionAlpha, 1f, _pauseAlpha / 2);

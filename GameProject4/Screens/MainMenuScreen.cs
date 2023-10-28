@@ -34,13 +34,13 @@ namespace GameProject4.Screens
 
         private void PlayGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-
-            string text = File.ReadAllText("progress.txt");
-            if (text.Contains("Level: Level 2")) LoadingScreen.Load(ScreenManager, true, e.PlayerIndex, new LevelTwoScreen());
-            else
-            {
-                LoadingScreen.Load(ScreenManager, true, e.PlayerIndex, new LevelOneScreen());
-            }
+            ScreenManager.AddScreen(new PlayGameOptions(), e.PlayerIndex);
+            //string text = File.ReadAllText("progress.txt");
+            //if (text.Contains("Level: Level 2")) LoadingScreen.Load(ScreenManager, true, e.PlayerIndex, new LevelTwoScreen());
+            //else
+            //{
+            //    LoadingScreen.Load(ScreenManager, true, e.PlayerIndex, new LevelOneScreen());
+            //}
         }
 
         private void ControlsEntrySelected(object sender, PlayerIndexEventArgs e)

@@ -31,7 +31,7 @@ namespace GameProject4
         #region privateFields
         private Texture2D _texture;
 
-        private Vector2 _position = new Vector2();
+        public Vector2 _position = new Vector2();
 
 
         private KeyboardState currentKeyboardState;
@@ -41,6 +41,7 @@ namespace GameProject4
         private BoundingRectangle _bounds;
 
         private BoundingRectangle _feet;
+
 
         private float _velocityY = 0;
 
@@ -79,6 +80,9 @@ namespace GameProject4
         public BoundingRectangle Bounds => _bounds;
 
         public BoundingRectangle FeetBounds => _feet;
+
+
+        //public BoundingRectangle rectangle;
         #endregion
 
         #region publicMethods
@@ -171,6 +175,8 @@ namespace GameProject4
                 _velocityY -= _jumpHeight;
                 if (!_attacked)_animationFrame = 0;
                 if (!_attacked) _animationTimer = 0;
+                
+
 
 
             }
@@ -179,6 +185,7 @@ namespace GameProject4
             if (!offGround)
             {
                 _velocityY = 0;
+                //CollisionHandling(rectangle);
             }
 
             if (currentKeyboardState.IsKeyDown(Keys.Enter) && !_attacked)
@@ -210,6 +217,7 @@ namespace GameProject4
             _bounds.Y = _position.Y;
             _feet.X = _position.X;
             _feet.Y = _bounds.Bottom;
+            
         }
 
 
@@ -222,24 +230,16 @@ namespace GameProject4
 
         public void CollisionHandling(BoundingRectangle rect)
         {
+            //rectangle = rect;
             
-            if (_bounds.Top > rect.Bottom)
+            if (_feet.CollidesWith(rect))
             {
-                
-                _position.Y -= 10f ;
-                
+                offGround = false;
+                _position.Y = rect.Y - _bounds.Height;
             }
-            else if (_bounds.Bottom < rect.Top && _position.X > rect.Left)
+            else
             {
-                
-                _position.X -= 10f;
-                
-            }
-            else if (_bounds.Bottom < rect.Top && _position.X < rect.Right)
-            {
-                
-                _position.X += 10f;
-               
+                offGround = true;
             }
 
         }
