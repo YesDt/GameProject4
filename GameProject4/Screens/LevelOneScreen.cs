@@ -32,7 +32,7 @@ namespace GameProject4.Screens
 
         private SpriteFont _gameFont;
 
-        private mcSprite _mc = new mcSprite(new Vector2(200, 300));
+        private mcSprite _mc = new mcSprite(new Vector2(200, 250));
         private CoinSprite[] _coins;
         private Platform _platforms;
 
@@ -179,13 +179,9 @@ namespace GameProject4.Screens
             if (IsActive)
             {
 
-                if(_platforms.Bounds.CollidesWith(_mc.Bounds))
+                if (_platforms.Bounds.CollidesWith(_mc.FeetBounds))
                 {
-                    _mc.offGround = false;
-                }
-                else
-                {
-                    _mc.offGround = true;
+                    _mc.CollisionHandling(_platforms.Bounds);
                 }
                 //var targetPosition = new Vector2(
                 //    ScreenManager.GraphicsDevice.Viewport.Width / 2 - _gameFont.MeasureString("Insert Gameplay Here").X / 2,

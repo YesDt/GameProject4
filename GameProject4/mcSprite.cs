@@ -82,7 +82,7 @@ namespace GameProject4
         public BoundingRectangle FeetBounds => _feet;
 
 
-        //public BoundingRectangle rectangle;
+        public BoundingRectangle rectangle;
         #endregion
 
         #region publicMethods
@@ -129,7 +129,7 @@ namespace GameProject4
             //    offGround = false;
             //}
 
-
+            CollisionHandling(rectangle);
 
             for (int i = 0; i < coinsCollected; i++)
             {
@@ -230,12 +230,28 @@ namespace GameProject4
 
         public void CollisionHandling(BoundingRectangle rect)
         {
-            //rectangle = rect;
+            rectangle = rect;
             
             if (_feet.CollidesWith(rect))
             {
                 offGround = false;
                 _position.Y = rect.Y - _bounds.Height;
+            }
+            else if (_bounds.CollidesWith(rect))
+            {
+                if (_bounds.Top >= rect.Bottom)
+                {
+                    _position.Y = rect.Bottom + 1f;
+                }
+                else if (_bounds.Left >= rect.Right)
+                {
+                    _position.X = rect.Right + 1f;
+
+                }
+                else if (_bounds.Right <= rect.Left)
+                {
+                    _position.X = rect.Left - 1f;
+                }
             }
             else
             {

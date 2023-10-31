@@ -32,7 +32,7 @@ namespace GameProject4.Screens
         private mcSprite _mc = new mcSprite(new Vector2(200, 300));
         private CoinSprite[] _coins;
         private Platform[] _platforms;
-        private Goal _goal = new Goal(new Vector2(600, 423), new BoundingRectangle(new Vector2(600, 423), 300f, 300));
+        //private Goal _goal = new Goal(new Vector2(600, 423), new BoundingRectangle(new Vector2(600, 423), 300f, 300));
 
 
         //private Texture2D _level2;
@@ -129,12 +129,12 @@ namespace GameProject4.Screens
             {
                 new Platform(new Vector2(200, 423), new BoundingRectangle(new Vector2(200 - 200, 423), 300f, 300)), 
                 
-                //new Platform(new Vector2(800, 390), new BoundingRectangle(new Vector2(800, 390), 300f, 300))
+                new Platform(new Vector2(600, 390), new BoundingRectangle(new Vector2(600, 390), 300f, 300))
 
             };
 
 
-            _goal.LoadContent(_content);
+            //_goal.LoadContent(_content);
 
             _coinCounter = _content.Load<SpriteFont>("CoinsLeft");
             _coins = new CoinSprite[]
@@ -227,12 +227,12 @@ namespace GameProject4.Screens
                 
                 
 
-                if (_mc.Bounds.CollidesWith(_goal.Bounds))
-                {
-                    MediaPlayer.Stop();
-                    File.WriteAllText("progress.txt", "");
-                     LoadingScreen.Load(ScreenManager, false, null, new MaintainenceScreen());
-                }
+                //if (_mc.Bounds.CollidesWith(_goal.Bounds))
+                //{
+                //    MediaPlayer.Stop();
+                //    File.WriteAllText("progress.txt", "");
+                //     LoadingScreen.Load(ScreenManager, false, null, new MaintainenceScreen());
+                //}
             }
         }
 
@@ -301,27 +301,27 @@ namespace GameProject4.Screens
 
                 }
             }
-            _goal.Draw(spriteBatch, gameTime);
+            //_goal.Draw(spriteBatch, gameTime);
 
 
             _mc.Draw(gameTime, spriteBatch);
 
             //Debugging purposes
-            //foreach (Platform plat in _platforms)
-            //{
-            //    spriteBatch.Draw(circle, new Vector2(plat.Bounds.Left, plat.Bounds.Top), null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-            //    spriteBatch.Draw(circle, new Vector2(plat.Bounds.Right, plat.Bounds.Top), null, Color.Red, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-            //    spriteBatch.Draw(circle, new Vector2(plat.Bounds.Left, plat.Bounds.Bottom), null, Color.Blue, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-            //    spriteBatch.Draw(circle, new Vector2(plat.Bounds.Right, plat.Bounds.Bottom), null, Color.Green, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-            //    spriteBatch.Draw(circle, new Vector2(_mc.Bounds.Left, _mc.Bounds.Top), null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-            //    spriteBatch.Draw(circle, new Vector2(_mc.Bounds.Right, _mc.Bounds.Top), null, Color.Red, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-            //    spriteBatch.Draw(circle, new Vector2(_mc.Bounds.Left, _mc.Bounds.Bottom), null, Color.Blue, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-            //    spriteBatch.Draw(circle, new Vector2(_mc.Bounds.Right, _mc.Bounds.Bottom), null, Color.Green, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-            //    spriteBatch.Draw(circle, new Vector2(_mc.FeetBounds.Left, _mc.FeetBounds.Top), null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-            //    spriteBatch.Draw(circle, new Vector2(_mc.FeetBounds.Right, _mc.FeetBounds.Top), null, Color.Red, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-            //    spriteBatch.Draw(circle, new Vector2(_mc.FeetBounds.Left, _mc.FeetBounds.Bottom), null, Color.Blue, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-            //    spriteBatch.Draw(circle, new Vector2(_mc.FeetBounds.Right, _mc.FeetBounds.Bottom), null, Color.Green, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
-            //}
+            foreach (Platform plat in _platforms)
+            {
+                spriteBatch.Draw(circle, new Vector2(plat.Bounds.Left, plat.Bounds.Top), null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(circle, new Vector2(plat.Bounds.Right, plat.Bounds.Top), null, Color.Red, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(circle, new Vector2(plat.Bounds.Left, plat.Bounds.Bottom), null, Color.Blue, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(circle, new Vector2(plat.Bounds.Right, plat.Bounds.Bottom), null, Color.Green, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(circle, new Vector2(_mc.Bounds.Left, _mc.Bounds.Top), null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(circle, new Vector2(_mc.Bounds.Right, _mc.Bounds.Top), null, Color.Red, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(circle, new Vector2(_mc.Bounds.Left, _mc.Bounds.Bottom), null, Color.Blue, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(circle, new Vector2(_mc.Bounds.Right, _mc.Bounds.Bottom), null, Color.Green, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(circle, new Vector2(_mc.FeetBounds.Left, _mc.FeetBounds.Top), null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(circle, new Vector2(_mc.FeetBounds.Right, _mc.FeetBounds.Top), null, Color.Red, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(circle, new Vector2(_mc.FeetBounds.Left, _mc.FeetBounds.Bottom), null, Color.Blue, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(circle, new Vector2(_mc.FeetBounds.Right, _mc.FeetBounds.Bottom), null, Color.Green, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+            }
 
             spriteBatch.End();
 
