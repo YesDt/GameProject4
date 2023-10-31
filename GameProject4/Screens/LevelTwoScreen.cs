@@ -33,7 +33,7 @@ namespace GameProject4.Screens
         private CoinSprite[] _coins;
         private Platform[] _platforms;
         //private Goal _goal = new Goal(new Vector2(600, 423), new BoundingRectangle(new Vector2(600, 423), 300f, 300));
-
+        
 
         //private Texture2D _level2;
         private TileMap _tilemap;
@@ -129,7 +129,8 @@ namespace GameProject4.Screens
             {
                 new Platform(new Vector2(200, 423), new BoundingRectangle(new Vector2(200 - 200, 423), 300f, 300)), 
                 
-                new Platform(new Vector2(600, 390), new BoundingRectangle(new Vector2(600, 390), 300f, 300))
+                new Platform(new Vector2(600, 423), new BoundingRectangle(new Vector2(600, 423), 60f, 300)),
+                new Platform(new Vector2(660, 390), new BoundingRectangle(new Vector2(620, 390), 60f, 300))
 
             };
 
