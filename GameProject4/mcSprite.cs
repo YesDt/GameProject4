@@ -65,6 +65,8 @@ namespace GameProject4
         #endregion
 
         #region publicFields
+        public PunchProjectile p;
+
         public int coinsCollected;
 
         public Action action;
@@ -190,6 +192,7 @@ namespace GameProject4
 
             if (currentKeyboardState.IsKeyDown(Keys.Enter) && !_attacked)
             {
+                p = new PunchProjectile(new Vector2(_position.X + 42, _position.Y + 20));
                 _attacked = true;
                 _animationFrame = 0;
                 _animationTimer = 0;
