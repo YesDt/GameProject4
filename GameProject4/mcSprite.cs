@@ -31,7 +31,7 @@ namespace GameProject4
         #region privateFields
         private Texture2D _texture;
 
-        public Vector2 _position = new Vector2();
+       
 
 
         private KeyboardState currentKeyboardState;
@@ -59,12 +59,14 @@ namespace GameProject4
 
         public bool offGround = false;
 
-        private bool _attacked = false;
+        
 
         private Vector2 direction;
         #endregion
 
         #region publicFields
+        public Vector2 _position = new Vector2();
+
         public PunchProjectile p;
 
         public int coinsCollected;
@@ -72,6 +74,10 @@ namespace GameProject4
         public Action action;
 
         public float Wall;
+
+        public bool Attacked = false;
+
+        public short AnimationFrame => _animationFrame;
 
 
         public Vector2 Position => _position;
@@ -175,8 +181,8 @@ namespace GameProject4
             if (currentKeyboardState.IsKeyDown(Keys.Space) && !offGround)
             {
                 _velocityY -= _jumpHeight;
-                if (!_attacked)_animationFrame = 0;
-                if (!_attacked) _animationTimer = 0;
+                if (!Attacked)_animationFrame = 0;
+                if (!Attacked) _animationTimer = 0;
                 
 
 
@@ -190,17 +196,17 @@ namespace GameProject4
                 //CollisionHandling(rectangle);
             }
 
-            if (currentKeyboardState.IsKeyDown(Keys.Enter) && !_attacked)
+            if (currentKeyboardState.IsKeyDown(Keys.Enter) && !Attacked)
             {
                 p = new PunchProjectile(new Vector2(_position.X + 42, _position.Y + 20));
-                _attacked = true;
+                Attacked = true;
                 _animationFrame = 0;
                 _animationTimer = 0;
 
                 
             }
 
-            if (_attacked)
+            if (Attacked)
             {
                 action = Action.Attacking;
                 _attackingTimer += gameTime.ElapsedGameTime.TotalSeconds;
@@ -208,7 +214,7 @@ namespace GameProject4
 
             if (_attackingTimer > 0.4)
             {
-                _attacked = false;
+                Attacked = false;
                 _attackingTimer = 0;
             }
 
@@ -273,7 +279,7 @@ namespace GameProject4
         {
 
             SpriteEffects spriteEffects = (_flipped) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-            if (_attacked)
+            if (Attacked)
             {
                 
                 _animationTimer += gameTime.ElapsedGameTime.TotalSeconds;

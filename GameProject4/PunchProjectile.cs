@@ -47,6 +47,14 @@ namespace GameProject4
             _position = pos;
         }
 
+
+        public void LoadContent(ContentManager content)
+        {
+            _texture = content.Load<Texture2D>("Sprite_PunchProjectile ");
+
+
+        }
+
         public void update(GameTime gameTime)
         {
             _position += new Vector2(Speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
@@ -82,8 +90,20 @@ namespace GameProject4
                     }
 
                 }
+                else
+                {
+                    _animationTimer += gameTime.ElapsedGameTime.TotalSeconds;
+                    if (_animationTimer > 0.2)
+                    {
+                        _animationFrame++;
+                        if (_animationFrame > 3) _animationFrame = 3;
+                        _animationTimer -= 0.2;
+                    }
+                }
                 
             }
+            var source = new Rectangle(_animationFrame * 250, (int)projState * 512, 268, 512);
+            spriteBatch.Draw(_texture, _position, source, Color.White, 0f, new Vector2(80, 120), 0.5f, spriteEffects, 0);
         }
     }
 }

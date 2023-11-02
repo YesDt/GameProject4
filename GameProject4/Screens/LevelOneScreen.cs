@@ -33,6 +33,7 @@ namespace GameProject4.Screens
         private SpriteFont _gameFont;
 
         private mcSprite _mc = new mcSprite(new Vector2(200, 250));
+        private PunchProjectile p;
         private CoinSprite[] _coins;
         private Platform _platforms;
 
@@ -206,7 +207,12 @@ namespace GameProject4.Screens
                 {
                     _noCoinsLeft = true;
                 }
-                
+                if(_mc.Attacked && _mc.AnimationFrame == 3)
+                {
+                    p = new PunchProjectile(new Vector2(_mc.Position.X + 60, _mc.Position.Y + 30));
+                    _mc.p = p;
+                    p.LoadContent(_content);
+                }
 
             }
         }
@@ -282,6 +288,10 @@ namespace GameProject4.Screens
 
 
             _mc.Draw(gameTime, spriteBatch);
+            if(_mc.Attacked && p != null)
+            {
+                p.Draw(gameTime, spriteBatch);
+            }
 
             spriteBatch.End();
 
