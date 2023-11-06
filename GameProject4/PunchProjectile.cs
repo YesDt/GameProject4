@@ -42,9 +42,10 @@ namespace GameProject4
 
         public BoundingRectangle Bounds => _bounds;
 
-        public PunchProjectile(Vector2 pos)
+        public PunchProjectile(Vector2 pos, mcSprite mc)
         {
             _position = pos;
+            if (mc._flipped) this.Flipped = true;
         }
 
 
@@ -57,10 +58,18 @@ namespace GameProject4
 
         public void update(GameTime gameTime)
         {
-            _position += new Vector2(Speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
+            if(Flipped)
+            {
+                _position -= new Vector2(Speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
+            }
+            else
+            {
+                _position += new Vector2(Speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
+            }
+           
             _bounds = new BoundingRectangle(new Vector2(_position.X - 32, _position.Y - 32), 20, 40);
             _projTimer += gameTime.ElapsedGameTime.TotalSeconds;
-            if (_projTimer >= 2.5)
+            if (_projTimer >= 1)
             {
                 Destroy(this);
             }
@@ -102,7 +111,7 @@ namespace GameProject4
                 }
                 
             }
-            var source = new Rectangle(_animationFrame * 250, (int)projState * 512, 268, 512);
+            var source = new Rectangle(_animationFrame * 250, (int)projState * 512, 268, 480);
             spriteBatch.Draw(_texture, _position, source, Color.White, 0f, new Vector2(80, 120), 0.5f, spriteEffects, 0);
         }
     }

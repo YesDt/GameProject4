@@ -55,7 +55,7 @@ namespace GameProject4
 
         private short _animationFrame;
 
-        private bool _flipped;
+        public bool _flipped;
 
         public bool offGround = false;
 
@@ -67,7 +67,7 @@ namespace GameProject4
         #region publicFields
         public Vector2 _position = new Vector2();
 
-        public PunchProjectile p;
+      
 
         public int coinsCollected;
 
@@ -198,7 +198,7 @@ namespace GameProject4
 
             if (currentKeyboardState.IsKeyDown(Keys.Enter) && !Attacked)
             {
-                p = new PunchProjectile(new Vector2(_position.X + 42, _position.Y + 20));
+      
                 Attacked = true;
                 _animationFrame = 0;
                 _animationTimer = 0;

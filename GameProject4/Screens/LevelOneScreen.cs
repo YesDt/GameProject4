@@ -17,6 +17,7 @@ using GameProject4.Particles;
 using GameProject4.Collisions;
 using System.IO;
 using Newtonsoft.Json;
+//using SharpDX.Direct2D1;
 
 namespace GameProject4.Screens
 {
@@ -33,7 +34,7 @@ namespace GameProject4.Screens
         private SpriteFont _gameFont;
 
         private mcSprite _mc = new mcSprite(new Vector2(200, 250));
-        private PunchProjectile p;
+        private List<PunchProjectile> _p;
         private CoinSprite[] _coins;
         private Platform _platforms;
 
@@ -120,7 +121,7 @@ namespace GameProject4.Screens
             _mc.LoadContent(_content);
             _mc.Wall = 1150;
             _platforms = new Platform(new Vector2(200, 423), new BoundingRectangle(new Vector2(200 - 200, 423), 1200f, 2));
-
+            _p = new List<PunchProjectile>();
 
             _coinCounter = _content.Load<SpriteFont>("CoinsLeft");
             _coins = new CoinSprite[]
@@ -207,13 +208,16 @@ namespace GameProject4.Screens
                 {
                     _noCoinsLeft = true;
                 }
-                if(_mc.Attacked && _mc.AnimationFrame == 3)
+                if (_mc.Attacked && _mc.AnimationFrame == 3)
                 {
-                    p = new PunchProjectile(new Vector2(_mc.Position.X + 60, _mc.Position.Y + 30));
-                    _mc.p = p;
-                    p.LoadContent(_content);
-                }
+                    _p.Add(new PunchProjectile(new Vector2(_mc.Position.X + 60, _mc.Position.Y + 20), _mc));
+                    foreach (var proj in _p)
+                    {
+                        proj.LoadContent(_content);
 
+                    }
+
+                }
             }
         }
 
@@ -229,10 +233,6 @@ namespace GameProject4.Screens
             var keyboardState = input.CurrentKeyboardStates[playerIndex];
             var gamePadState = input.CurrentGamePadStates[playerIndex];
 
-            // The game pauses either if the user presses the pause button, or if
-            // they unplug the active gamepad. This requires us to keep track of
-            // whether a gamepad was ever plugged in, because we don't want to pause
-            // on PC if they are playing with a keyboard and have no gamepad at all!
             bool gamePadDisconnected = !gamePadState.IsConnected && input.GamePadWasConnected[playerIndex];
 
             PlayerIndex player;
@@ -246,6 +246,10 @@ namespace GameProject4.Screens
                 MediaPlayer.Resume();
 
                 _mc.Update(gameTime);
+                foreach (var proj in _p)
+                {
+                    proj.update(gameTime);
+                }
 
             }
 
@@ -263,7 +267,7 @@ namespace GameProject4.Screens
 
 
             Matrix transform;
-            // This game has a blue background. Why? Because!
+           
             ScreenManager.GraphicsDevice.Clear(ClearOptions.Target, Color.CornflowerBlue, 0, 0);
 
             var spriteBatch = ScreenManager.SpriteBatch;
@@ -288,9 +292,10 @@ namespace GameProject4.Screens
 
 
             _mc.Draw(gameTime, spriteBatch);
-            if(_mc.Attacked && p != null)
+            if(_mc.Attacked)
             {
-                p.Draw(gameTime, spriteBatch);
+                foreach(var proj in _p) proj.Draw(gameTime, spriteBatch);
+
             }
 
             spriteBatch.End();
